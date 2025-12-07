@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import LandingLayout from '@/layouts/landing-layout';
 import { PaginatedData } from '@/types';
 
@@ -29,9 +29,21 @@ interface Category {
 interface Props {
     products: PaginatedData<Product>;
     categories: Category[];
+    selectedCategory?: string;
 }
 
-export default function Home({ products, categories }: Props) {
+export default function Home({ products, categories, selectedCategory }: Props) {
+    const handleCategoryFilter = (categorySlug: string | null) => {
+        router.get(
+            '/',
+            categorySlug ? { category: categorySlug } : {},
+            {
+                preserveState: true,
+                preserveScroll: true,
+            }
+        );
+    };
+
     return (
         <LandingLayout title="Products - TechZero">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 bg-white">
@@ -48,13 +60,25 @@ export default function Home({ products, categories }: Props) {
                 {/* Categories Filter */}
                 {categories.length > 0 && (
                     <div className="mb-8 flex flex-wrap gap-2 justify-center">
-                        <button className="px-4 py-2 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 transition-colors">
+                        <button
+                            onClick={() => handleCategoryFilter(null)}
+                            className={`px-4 py-2 rounded-md font-medium transition-colors ${
+                                !selectedCategory
+                                    ? 'bg-blue-600 text-white'
+                                    : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'
+                            }`}
+                        >
                             All
                         </button>
                         {categories.map((category) => (
                             <button
                                 key={category.id}
-                                className="px-4 py-2 bg-white text-gray-700 rounded-md font-medium hover:bg-gray-50 transition-colors border border-gray-300"
+                                onClick={() => handleCategoryFilter(category.slug)}
+                                className={`px-4 py-2 rounded-md font-medium transition-colors ${
+                                    selectedCategory == category.slug
+                                        ? 'bg-blue-600 text-white'
+                                        : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'
+                                }`}
                             >
                                 {category.name}
                             </button>
