@@ -12,6 +12,7 @@ interface Product {
     description: string;
     price: string;
     stock: number;
+    image_url?: string | null;
     category: {
         id: number;
         name: string;
