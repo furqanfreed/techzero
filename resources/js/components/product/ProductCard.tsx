@@ -26,15 +26,15 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-    // Color gradients based on category for vibrant look
+    // Color gradients based on category using logo colors (Orange, Cyan, Green, Yellow)
     const categoryColors: Record<string, string> = {
-        'Laptop': 'from-blue-500 via-purple-500 to-pink-500',
-        'Phone': 'from-cyan-500 via-blue-500 to-indigo-500',
-        'Tablet': 'from-orange-500 via-red-500 to-pink-500',
-        'Desktop': 'from-green-500 via-teal-500 to-cyan-500',
+        'Laptop': 'from-cyan-500 via-blue-500 to-cyan-600',
+        'Phone': 'from-yellow-500 via-orange-500 to-yellow-600',
+        'Tablet': 'from-orange-500 via-yellow-500 to-orange-600',
+        'Desktop': 'from-green-500 via-lime-500 to-green-600',
     };
 
-    const gradientClass = categoryColors[product.category.name] || 'from-blue-500 via-purple-500 to-pink-500';
+    const gradientClass = categoryColors[product.category.name] || 'from-orange-500 via-cyan-500 to-green-500';
 
     return (
         <div className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border-2 border-transparent hover:border-gradient-to-r flex flex-col group">
@@ -55,7 +55,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                     )}
                 </div>
                 
-                <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 transition-all duration-300">
+                <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-orange-500 group-hover:via-cyan-500 group-hover:to-green-500 transition-all duration-300">
                     {product.name}
                 </h3>
                 
@@ -65,7 +65,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 
                 <div className="mb-4 flex items-center justify-between">
                     <div>
-                        <span className="text-3xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                        <span className="text-3xl font-extrabold bg-gradient-to-r from-orange-500 via-cyan-500 to-green-500 bg-clip-text text-transparent">
                             ${product.price}
                         </span>
                     </div>

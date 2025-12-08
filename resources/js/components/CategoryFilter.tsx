@@ -32,16 +32,16 @@ const getCategoryIcon = (categoryName: string, categorySlug: string) => {
     return Tag;
 };
 
-// Map category names to gradient colors (matching ProductCard)
+// Map category names to gradient colors using logo colors (Orange, Cyan, Green, Yellow)
 const getCategoryGradient = (categoryName: string): string => {
     const categoryColors: Record<string, string> = {
-        'Laptop': 'from-blue-500 via-purple-500 to-pink-500',
-        'Phone': 'from-cyan-500 via-blue-500 to-indigo-500',
-        'Tablet': 'from-orange-500 via-red-500 to-pink-500',
-        'Desktop': 'from-green-500 via-teal-500 to-cyan-500',
+        'Laptop': 'from-cyan-500 via-blue-500 to-cyan-600',
+        'Phone': 'from-yellow-500 via-orange-500 to-yellow-600',
+        'Tablet': 'from-orange-500 via-yellow-500 to-orange-600',
+        'Desktop': 'from-green-500 via-lime-500 to-green-600',
     };
     
-    return categoryColors[categoryName] || 'from-blue-500 via-purple-500 to-pink-500';
+    return categoryColors[categoryName] || 'from-orange-500 via-cyan-500 to-green-500';
 };
 
 export default function CategoryFilter({ categories, selectedCategory, onCategorySelect }: CategoryFilterProps) {
@@ -60,7 +60,7 @@ export default function CategoryFilter({ categories, selectedCategory, onCategor
                     <div
                         className={`w-20 h-20 md:w-24 md:h-24 rounded-2xl flex items-center justify-center transition-all duration-300 transform ${
                             !selectedCategory
-                                ? 'bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 shadow-xl scale-110 ring-4 ring-blue-200'
+                                ? 'bg-gradient-to-br from-orange-500 via-cyan-500 to-green-500 shadow-xl scale-110 ring-4 ring-orange-200'
                                 : 'bg-gradient-to-br from-gray-100 to-gray-200 group-hover:from-gray-200 group-hover:to-gray-300 group-hover:scale-110 shadow-md hover:shadow-lg'
                         }`}
                     >
@@ -68,7 +68,7 @@ export default function CategoryFilter({ categories, selectedCategory, onCategor
                             className={`w-10 h-10 md:w-12 md:h-12 transition-all duration-300 ${
                                 !selectedCategory 
                                     ? 'text-white drop-shadow-lg' 
-                                    : 'text-gray-600 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600'
+                                    : 'text-gray-600 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-orange-500 group-hover:via-cyan-500 group-hover:to-green-500'
                             }`}
                             strokeWidth={!selectedCategory ? 2 : 1.5}
                         />
@@ -76,8 +76,8 @@ export default function CategoryFilter({ categories, selectedCategory, onCategor
                     <span
                         className={`mt-3 text-sm md:text-base font-bold transition-all duration-300 ${
                             !selectedCategory
-                                ? 'text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600'
-                                : 'text-gray-700 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600'
+                                ? 'text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-cyan-500 to-green-500'
+                                : 'text-gray-700 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-orange-500 group-hover:via-cyan-500 group-hover:to-green-500'
                         }`}
                     >
                         All
@@ -90,21 +90,21 @@ export default function CategoryFilter({ categories, selectedCategory, onCategor
                     const isSelected = selectedCategory === category.slug;
                     const gradientClass = getCategoryGradient(category.name);
                     
-                    // Get hover gradient classes based on category
+                    // Get hover gradient classes based on category using logo colors
                     const getHoverClasses = () => {
                         if (category.name === 'Laptop') {
-                            return 'group-hover:from-blue-500 group-hover:via-purple-500 group-hover:to-pink-500';
+                            return 'group-hover:from-cyan-500 group-hover:via-blue-500 group-hover:to-cyan-600';
                         }
                         if (category.name === 'Phone') {
-                            return 'group-hover:from-cyan-500 group-hover:via-blue-500 group-hover:to-indigo-500';
+                            return 'group-hover:from-yellow-500 group-hover:via-orange-500 group-hover:to-yellow-600';
                         }
                         if (category.name === 'Tablet') {
-                            return 'group-hover:from-orange-500 group-hover:via-red-500 group-hover:to-pink-500';
+                            return 'group-hover:from-orange-500 group-hover:via-yellow-500 group-hover:to-orange-600';
                         }
                         if (category.name === 'Desktop') {
-                            return 'group-hover:from-green-500 group-hover:via-teal-500 group-hover:to-cyan-500';
+                            return 'group-hover:from-green-500 group-hover:via-lime-500 group-hover:to-green-600';
                         }
-                        return 'group-hover:from-blue-500 group-hover:via-purple-500 group-hover:to-pink-500';
+                        return 'group-hover:from-orange-500 group-hover:via-cyan-500 group-hover:to-green-500';
                     };
 
                     return (
@@ -117,8 +117,8 @@ export default function CategoryFilter({ categories, selectedCategory, onCategor
                                 className={`w-20 h-20 md:w-24 md:h-24 rounded-2xl flex items-center justify-center transition-all duration-300 transform ${
                                     isSelected
                                         ? `bg-gradient-to-br ${gradientClass} shadow-2xl scale-110 ring-4 ring-opacity-50 ${
-                                            category.name === 'Laptop' ? 'ring-blue-200' :
-                                            category.name === 'Phone' ? 'ring-cyan-200' :
+                                            category.name === 'Laptop' ? 'ring-cyan-200' :
+                                            category.name === 'Phone' ? 'ring-yellow-200' :
                                             category.name === 'Tablet' ? 'ring-orange-200' :
                                             'ring-green-200'
                                         }`
@@ -138,7 +138,7 @@ export default function CategoryFilter({ categories, selectedCategory, onCategor
                                 className={`mt-3 text-sm md:text-base font-bold text-center max-w-[100px] transition-all duration-300 ${
                                     isSelected
                                         ? `text-transparent bg-clip-text bg-gradient-to-r ${gradientClass}`
-                                        : 'text-gray-700 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600'
+                                        : 'text-gray-700 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-orange-500 group-hover:via-cyan-500 group-hover:to-green-500'
                                 }`}
                             >
                                 {category.name}
