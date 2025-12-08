@@ -14,20 +14,21 @@ class LandingController extends Controller
      */
     public function index(Request $request)
     {
+        // Fetch all categories once
+        $categories = Category::all();
+
         $query = Product::with(['category', 'supplier'])
             ->where('status', 'active');
 
         // Filter by category if provided
         if ($request->has('category') && $request->category) {
-            $category = Category::where('slug', $request->category)->first();
+            $category = $categories->firstWhere('slug', $request->category);
             if ($category) {
                 $query->where('category_id', $category->id);
             }
         }
 
         $products = $query->latest()->paginate(12)->withQueryString();
-
-        $categories = Category::all();
 
         return Inertia::render('landing/home', [
             'products' => $products,

@@ -19,11 +19,9 @@ interface CategoryFilterProps {
 }
 
 // Map category names/slugs to icons
-const getCategoryIcon = (categoryName: string, categorySlug: string): LucideIcon => {
+const getCategoryIcon = (categoryName: string, categorySlug: string) => {
     const name = categoryName.toLowerCase();
     const slug = categorySlug.toLowerCase();
-
-    
     
     if (name.includes('desktop') || slug.includes('desktop')) return Monitor;
     if (name.includes('laptop') || slug.includes('laptop')) return Laptop;
