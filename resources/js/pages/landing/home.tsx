@@ -1,7 +1,7 @@
 import { Head, router } from '@inertiajs/react';
 import LandingLayout from '@/layouts/landing-layout';
 import { PaginatedData } from '@/types';
-import ProductCard from '@/components/ProductCard';
+import ProductCard from '@/components/product/ProductCard';
 import Pagination from '@/components/Pagination';
 import CategoryFilter from '@/components/CategoryFilter';
 
