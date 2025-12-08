@@ -4,6 +4,7 @@ import { PaginatedData } from '@/types';
 import ProductCard from '@/components/product/ProductCard';
 import Pagination from '@/components/Pagination';
 import CategoryFilter from '@/components/CategoryFilter';
+import NoProductsFound from '@/components/product/NoProductsFound';
 
 interface Product {
     id: number;
@@ -70,14 +71,20 @@ export default function Home({ products, categories, selectedCategory }: Props) 
                 />
 
                 {/* Products Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-                    {products.data.map((product) => (
-                        <ProductCard key={product.id} product={product} />
-                    ))}
-                </div>
+                {products.data.length > 0 ? (
+                    <>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+                            {products.data.map((product) => (
+                                <ProductCard key={product.id} product={product} />
+                            ))}
+                        </div>
 
-                {/* Pagination */}
-                <Pagination links={products.links} />
+                        {/* Pagination */}
+                        <Pagination links={products.links} />
+                    </>
+                ) : (
+                    <NoProductsFound />
+                )}
             </div>
         </LandingLayout>
     );
