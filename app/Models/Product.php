@@ -73,4 +73,12 @@ class Product extends Model
     {
         return $this->hasMany(CartItem::class);
     }
+
+    /**
+     * Get the reviews for the product.
+     */
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
 }
