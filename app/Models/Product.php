@@ -43,6 +43,13 @@ class Product extends Model
     }
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['rating'];
+
+    /**
      * Get the supplier that owns the product.
      */
     public function supplier(): BelongsTo
@@ -80,5 +87,13 @@ class Product extends Model
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
+    }
+
+    /**
+     * Get the product rating from meta.
+     */
+    public function getRatingAttribute(): ?float
+    {
+        return $this->meta['rating'] ?? null;
     }
 }

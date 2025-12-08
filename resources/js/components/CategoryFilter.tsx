@@ -32,6 +32,18 @@ const getCategoryIcon = (categoryName: string, categorySlug: string) => {
     return Tag;
 };
 
+// Map category names to gradient colors (matching ProductCard)
+const getCategoryGradient = (categoryName: string): string => {
+    const categoryColors: Record<string, string> = {
+        'Laptop': 'from-blue-500 via-purple-500 to-pink-500',
+        'Phone': 'from-cyan-500 via-blue-500 to-indigo-500',
+        'Tablet': 'from-orange-500 via-red-500 to-pink-500',
+        'Desktop': 'from-green-500 via-teal-500 to-cyan-500',
+    };
+    
+    return categoryColors[categoryName] || 'from-blue-500 via-purple-500 to-pink-500';
+};
+
 export default function CategoryFilter({ categories, selectedCategory, onCategorySelect }: CategoryFilterProps) {
     if (categories.length === 0) {
         return null;
@@ -43,27 +55,29 @@ export default function CategoryFilter({ categories, selectedCategory, onCategor
                 {/* All Categories Button */}
                 <button
                     onClick={() => onCategorySelect(null)}
-                    className="flex flex-col items-center group cursor-pointer transition-all duration-200"
+                    className="flex flex-col items-center group cursor-pointer transition-all duration-300"
                 >
                     <div
-                        className={`w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center transition-all duration-200 ${
+                        className={`w-20 h-20 md:w-24 md:h-24 rounded-2xl flex items-center justify-center transition-all duration-300 transform ${
                             !selectedCategory
-                                ? 'bg-blue-600 shadow-lg scale-105'
-                                : 'bg-gray-100 group-hover:bg-gray-200 group-hover:scale-110'
+                                ? 'bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 shadow-xl scale-110 ring-4 ring-blue-200'
+                                : 'bg-gradient-to-br from-gray-100 to-gray-200 group-hover:from-gray-200 group-hover:to-gray-300 group-hover:scale-110 shadow-md hover:shadow-lg'
                         }`}
                     >
                         <Tag
-                            className={`w-10 h-10 md:w-12 md:h-12 transition-colors duration-200 ${
-                                !selectedCategory ? 'text-white' : 'text-gray-700 group-hover:text-blue-600'
+                            className={`w-10 h-10 md:w-12 md:h-12 transition-all duration-300 ${
+                                !selectedCategory 
+                                    ? 'text-white drop-shadow-lg' 
+                                    : 'text-gray-600 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600'
                             }`}
-                            strokeWidth={1.5}
+                            strokeWidth={!selectedCategory ? 2 : 1.5}
                         />
                     </div>
                     <span
-                        className={`mt-3 text-sm md:text-base font-medium transition-colors duration-200 ${
+                        className={`mt-3 text-sm md:text-base font-bold transition-all duration-300 ${
                             !selectedCategory
-                                ? 'text-blue-600'
-                                : 'text-gray-700 group-hover:text-blue-600'
+                                ? 'text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600'
+                                : 'text-gray-700 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600'
                         }`}
                     >
                         All
@@ -74,34 +88,57 @@ export default function CategoryFilter({ categories, selectedCategory, onCategor
                 {categories.map((category) => {
                     const Icon = getCategoryIcon(category.name, category.slug);
                     const isSelected = selectedCategory === category.slug;
+                    const gradientClass = getCategoryGradient(category.name);
+                    
+                    // Get hover gradient classes based on category
+                    const getHoverClasses = () => {
+                        if (category.name === 'Laptop') {
+                            return 'group-hover:from-blue-500 group-hover:via-purple-500 group-hover:to-pink-500';
+                        }
+                        if (category.name === 'Phone') {
+                            return 'group-hover:from-cyan-500 group-hover:via-blue-500 group-hover:to-indigo-500';
+                        }
+                        if (category.name === 'Tablet') {
+                            return 'group-hover:from-orange-500 group-hover:via-red-500 group-hover:to-pink-500';
+                        }
+                        if (category.name === 'Desktop') {
+                            return 'group-hover:from-green-500 group-hover:via-teal-500 group-hover:to-cyan-500';
+                        }
+                        return 'group-hover:from-blue-500 group-hover:via-purple-500 group-hover:to-pink-500';
+                    };
 
                     return (
                         <button
                             key={category.id}
                             onClick={() => onCategorySelect(category.slug)}
-                            className="flex flex-col items-center group cursor-pointer transition-all duration-200"
+                            className="flex flex-col items-center group cursor-pointer transition-all duration-300"
                         >
                             <div
-                                className={`w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center transition-all duration-200 ${
+                                className={`w-20 h-20 md:w-24 md:h-24 rounded-2xl flex items-center justify-center transition-all duration-300 transform ${
                                     isSelected
-                                        ? 'bg-blue-600 shadow-lg scale-105'
-                                        : 'bg-gray-100 group-hover:bg-gray-200 group-hover:scale-110'
+                                        ? `bg-gradient-to-br ${gradientClass} shadow-2xl scale-110 ring-4 ring-opacity-50 ${
+                                            category.name === 'Laptop' ? 'ring-blue-200' :
+                                            category.name === 'Phone' ? 'ring-cyan-200' :
+                                            category.name === 'Tablet' ? 'ring-orange-200' :
+                                            'ring-green-200'
+                                        }`
+                                        : `bg-gradient-to-br from-gray-100 to-gray-200 ${getHoverClasses()} group-hover:scale-110 shadow-md hover:shadow-xl`
                                 }`}
                             >
                                 <Icon
-                                    className={`w-10 h-10 md:w-12 md:h-12 transition-colors duration-200 ${
+                                    className={`w-10 h-10 md:w-12 md:h-12 transition-all duration-300 ${
                                         isSelected
-                                            ? 'text-white'
-                                            : 'text-gray-700 group-hover:text-blue-600'
+                                            ? 'text-white drop-shadow-lg'
+                                            : 'text-gray-600 group-hover:text-white group-hover:drop-shadow-lg'
                                     }`}
-                                    strokeWidth={1.5}
+                                    strokeWidth={isSelected ? 2 : 1.5}
                                 />
                             </div>
                             <span
-                                className={`mt-3 text-sm md:text-base font-medium text-center max-w-[100px] transition-colors duration-200 ${
+                                className={`mt-3 text-sm md:text-base font-bold text-center max-w-[100px] transition-all duration-300 ${
                                     isSelected
-                                        ? 'text-blue-600'
-                                        : 'text-gray-700 group-hover:text-blue-600'
+                                        ? `text-transparent bg-clip-text bg-gradient-to-r ${gradientClass}`
+                                        : 'text-gray-700 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600'
                                 }`}
                             >
                                 {category.name}

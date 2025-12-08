@@ -13,6 +13,7 @@ interface Product {
     price: string;
     stock: number;
     image_url?: string | null;
+    rating?: number | null;
     category: {
         id: number;
         name: string;
@@ -52,10 +53,10 @@ export default function Home({ products, categories, selectedCategory }: Props) 
         <LandingLayout title="Products - TechZero">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 bg-white">
                 <div className="mb-12 text-center">
-                    <h1 className="text-4xl font-bold text-gray-900 mb-4">
+                    <h1 className="text-4xl font-extrabold mb-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">
                         Discover Our Products
                     </h1>
-                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                    <p className="text-lg text-gray-700 max-w-2xl mx-auto">
                         Explore our wide range of technology products from
                         trusted suppliers
                     </p>

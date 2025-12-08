@@ -21,29 +21,9 @@ export default function Navigation() {
                             </span>
                         </Link>
                     </div>
-                    {/* Navigation Links - Center */}
-                    <div className="flex items-center space-x-8 flex-1 justify-center">
-                        <Link
-                            href="/"
-                            className="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors font-medium"
-                        >
-                            Products
-                        </Link>
-                        <Link
-                            href="/about"
-                            className="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors font-medium"
-                        >
-                            About Us
-                        </Link>
-                        <Link
-                            href="/contact"
-                            className="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors font-medium"
-                        >
-                            Contact
-                        </Link>
-                    </div>
+
                     {/* Cart & Sign In - Right */}
-                    <div className="flex items-center space-x-4 flex-1 justify-end">
+                    <div className="flex items-center space-x-4 justify-end">
                         <Link
                             href="/cart"
                             className="relative p-2 text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors"
@@ -56,8 +36,8 @@ export default function Navigation() {
                             )}
                         </Link>
                         <Link
-                            href="http://app.techzero.test"
-                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+                            href="http://app.techzero.test/login"
+                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 hover:from-blue-700 hover:via-purple-700 hover:to-pink-600 transition-colors shadow-md"
                         >
                             Sign In
                         </Link>
