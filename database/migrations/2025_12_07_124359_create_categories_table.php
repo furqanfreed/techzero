@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
+            $table->string('image_url')->nullable();
+            $table->enum('status', ['active', 'inactive', 'pending', 'draft'])->default('active')->index();
+            $table->json('meta')->nullable();
             $table->timestamps();
         });
     }

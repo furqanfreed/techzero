@@ -20,7 +20,9 @@ return new class extends Migration
             $table->longText('description');
             $table->decimal('price', 10, 2);
             $table->integer('stock');
-            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->string('image_url')->nullable();
+            $table->enum('status', ['active', 'inactive', 'pending', 'draft'])->default('active')->index();
+            $table->json('meta')->nullable();
             $table->timestamps();
         });
     }

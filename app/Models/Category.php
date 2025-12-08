@@ -18,7 +18,22 @@ class Category extends Model
     protected $fillable = [
         'name',
         'slug',
+        'image_url',
+        'status',
+        'meta',
     ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'meta' => 'array',
+        ];
+    }
 
     /**
      * Get the products for the category.

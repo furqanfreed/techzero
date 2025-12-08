@@ -24,7 +24,9 @@ class Product extends Model
         'description',
         'price',
         'stock',
+        'image_url',
         'status',
+        'meta',
     ];
 
     /**
@@ -36,6 +38,7 @@ class Product extends Model
     {
         return [
             'price' => 'decimal:2',
+            'meta' => 'array',
         ];
     }
 
