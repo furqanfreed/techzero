@@ -17,5 +17,10 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             CategorySeeder::class,
         ]);
+
+        // Call ProductSeeder 3 times
+        for ($i = 0; $i < 3; $i++) {
+            $this->call(ProductSeeder::class);
+        }
     }
 }

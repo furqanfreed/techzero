@@ -30,7 +30,7 @@ export default function About() {
                             <p className="text-gray-700 dark:text-gray-300">
                                 Our platform ensures quality, reliability, and
                                 competitive pricing across all product
-                                categories, from desktops and laptops to tablets
+                                categories, from accessories and laptops to tablets
                                 and smartphones.
                             </p>
                         </div>

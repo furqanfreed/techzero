@@ -35,7 +35,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         'Laptop': 'from-cyan-500 via-blue-500 to-cyan-600',
         'Phone': 'from-yellow-500 via-orange-500 to-yellow-600',
         'Tablet': 'from-orange-500 via-yellow-500 to-orange-600',
-        'Desktop': 'from-green-500 via-lime-500 to-green-600',
+        'Accessories': 'from-green-500 via-lime-500 to-green-600',
     };
 
     const gradientClass = categoryColors[product.category.name] || 'from-orange-500 via-cyan-500 to-green-500';

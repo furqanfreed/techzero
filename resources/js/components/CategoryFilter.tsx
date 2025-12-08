@@ -23,7 +23,7 @@ const getCategoryIcon = (categoryName: string, categorySlug: string) => {
     const name = categoryName.toLowerCase();
     const slug = categorySlug.toLowerCase();
     
-    if (name.includes('desktop') || slug.includes('desktop')) return Monitor;
+    if (name.includes('accessories') || slug.includes('accessories')) return Monitor;
     if (name.includes('laptop') || slug.includes('laptop')) return Laptop;
     if (name.includes('tablet') || slug.includes('tablet')) return Tablet;
     if (name.includes('phone') ||  slug.includes('phone')) return Smartphone;    
@@ -38,7 +38,7 @@ const getCategoryGradient = (categoryName: string): string => {
         'Laptop': 'from-cyan-500 via-blue-500 to-cyan-600',
         'Phone': 'from-yellow-500 via-orange-500 to-yellow-600',
         'Tablet': 'from-orange-500 via-yellow-500 to-orange-600',
-        'Desktop': 'from-green-500 via-lime-500 to-green-600',
+        'Accessories': 'from-green-500 via-lime-500 to-green-600',
     };
     
     return categoryColors[categoryName] || 'from-orange-500 via-cyan-500 to-green-500';
@@ -101,7 +101,7 @@ export default function CategoryFilter({ categories, selectedCategory, onCategor
                         if (category.name === 'Tablet') {
                             return 'group-hover:from-orange-500 group-hover:via-yellow-500 group-hover:to-orange-600';
                         }
-                        if (category.name === 'Desktop') {
+                        if (category.name === 'Accessories') {
                             return 'group-hover:from-green-500 group-hover:via-lime-500 group-hover:to-green-600';
                         }
                         return 'group-hover:from-orange-500 group-hover:via-cyan-500 group-hover:to-green-500';
