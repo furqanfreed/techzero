@@ -1,6 +1,7 @@
 import ProductImage from './ProductImage';
 import StarRating from './StarRating';
 import { useCart } from '@/contexts/CartContext';
+import { ShoppingCart } from 'lucide-react';
 
 interface Product {
     id: number;
@@ -102,10 +103,15 @@ export default function ProductCard({ product }: ProductCardProps) {
                 <button
                     onClick={handleAddToCart}
                     disabled={product.stock === 0}
-                    className={`w-full px-4 py-3 rounded-lg font-bold text-white transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-lg hover:shadow-xl bg-gradient-to-r ${gradientClass} mt-auto`}
+                    className={`w-full px-4 py-3 rounded-lg font-bold text-white transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-lg hover:shadow-xl bg-gradient-to-r ${gradientClass} mt-auto flex items-center justify-center gap-2`}
                 >
                     {product.stock > 0
-                        ? 'Add to Cart 🛒'
+                        ? (
+                            <>
+                                <ShoppingCart className="h-5 w-5" />
+                                <span>Add to Cart</span>
+                            </>
+                        )
                         : 'Out of Stock'}
                 </button>
             </div>
