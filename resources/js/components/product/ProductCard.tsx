@@ -1,5 +1,6 @@
 import ProductImage from './ProductImage';
 import StarRating from './StarRating';
+import { useCart } from '@/contexts/CartContext';
 
 interface Product {
     id: number;
@@ -26,6 +27,8 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+    const { addToCart } = useCart();
+
     // Color gradients based on category using logo colors (Orange, Cyan, Green, Yellow)
     const categoryColors: Record<string, string> = {
         'Laptop': 'from-cyan-500 via-blue-500 to-cyan-600',
@@ -35,6 +38,18 @@ export default function ProductCard({ product }: ProductCardProps) {
     };
 
     const gradientClass = categoryColors[product.category.name] || 'from-orange-500 via-cyan-500 to-green-500';
+
+    const handleAddToCart = () => {
+        if (product.stock > 0) {
+            addToCart({
+                id: product.id,
+                name: product.name,
+                slug: product.slug,
+                price: product.price,
+                image_url: product.image_url,
+            });
+        }
+    };
 
     return (
         <div className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border-2 border-transparent hover:border-gradient-to-r flex flex-col group">
@@ -85,6 +100,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 </div>
                 
                 <button
+                    onClick={handleAddToCart}
                     disabled={product.stock === 0}
                     className={`w-full px-4 py-3 rounded-lg font-bold text-white transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-lg hover:shadow-xl bg-gradient-to-r ${gradientClass} mt-auto`}
                 >

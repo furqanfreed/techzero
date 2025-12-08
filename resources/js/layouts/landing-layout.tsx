@@ -1,5 +1,6 @@
 import { Head } from '@inertiajs/react';
 import Navigation from '@/components/landing/navigation';
+import { CartProvider } from '@/contexts/CartContext';
 
 interface LandingLayoutProps {
     children: React.ReactNode;
@@ -11,7 +12,7 @@ export default function LandingLayout({
     title = 'TechZero',
 }: LandingLayoutProps) {
     return (
-        <>
+        <CartProvider>
             <Head title={title} />
             <div className="min-h-screen bg-white dark:bg-gray-950">
                 <Navigation />
@@ -87,6 +88,6 @@ export default function LandingLayout({
                     </div>
                 </footer>
             </div>
-        </>
+        </CartProvider>
     );
 }

@@ -1,8 +1,10 @@
 import { Link } from '@inertiajs/react';
 import { ShoppingCart } from 'lucide-react';
+import { useCart } from '@/contexts/CartContext';
 
 export default function Navigation() {
-    const cartCount = 0; // TODO: Get from cart state/context
+    const { getTotalItems } = useCart();
+    const cartCount = getTotalItems();
 
     return (
         <nav className="bg-white shadow-sm dark:bg-gray-900">
@@ -30,7 +32,7 @@ export default function Navigation() {
                         >
                             <ShoppingCart className="h-6 w-6" />
                             {cartCount > 0 && (
-                                <span className="absolute top-0 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-black text-xs font-medium text-white">
+                                <span className="absolute top-0 right-0 flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-r from-orange-500 via-cyan-500 to-green-500 text-xs font-bold text-white shadow-lg">
                                     {cartCount}
                                 </span>
                             )}
