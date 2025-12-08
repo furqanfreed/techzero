@@ -46,6 +46,14 @@ class LandingController extends Controller
     }
 
     /**
+     * Display the cart page.
+     */
+    public function cart()
+    {
+        return Inertia::render('landing/cart');
+    }
+
+    /**
      * Display the contact page.
      */
     public function contact()

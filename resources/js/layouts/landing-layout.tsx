@@ -40,15 +40,7 @@ export default function LandingLayout({
                                 <h3 className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4">
                                     Quick Links
                                 </h3>
-                                <ul className="space-y-2">
-                                    <li>
-                                        <a
-                                            href="/"
-                                            className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors"
-                                        >
-                                            Products
-                                        </a>
-                                    </li>
+                                <ul className="space-y-2">                                    
                                     <li>
                                         <a
                                             href="/about"

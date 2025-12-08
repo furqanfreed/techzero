@@ -7,6 +7,7 @@ use Laravel\Fortify\Features;
 // Landing page for main domain (techzero.test)
 Route::domain('techzero.test')->group(function () {
     Route::get('/', [App\Http\Controllers\LandingController::class, 'index'])->name('landing.home');
+    Route::get('/cart', [App\Http\Controllers\LandingController::class, 'cart'])->name('landing.cart');
     Route::get('/about', [App\Http\Controllers\LandingController::class, 'about'])->name('landing.about');
     Route::get('/contact', [App\Http\Controllers\LandingController::class, 'contact'])->name('landing.contact');
     Route::post('/contact', [App\Http\Controllers\LandingController::class, 'storeContact'])->name('landing.contact.store');
