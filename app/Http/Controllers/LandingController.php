@@ -54,6 +54,27 @@ class LandingController extends Controller
     }
 
     /**
+     * Display a single product details page.
+     */
+    public function show(string $slug)
+    {
+        $product = Product::with([
+            'category',
+            'supplier',
+            'reviews' => function ($query) {
+                $query->where('status', 'active')->orderBy('reviewed_at', 'desc');
+            }
+        ])
+            ->where('slug', $slug)
+            ->where('status', 'active')
+            ->firstOrFail();
+
+        return Inertia::render('landing/product-details', [
+            'product' => $product,
+        ]);
+    }
+
+    /**
      * Display the contact page.
      */
     public function contact()

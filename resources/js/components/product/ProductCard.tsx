@@ -2,6 +2,7 @@ import ProductImage from './ProductImage';
 import StarRating from './StarRating';
 import { useCart } from '@/contexts/CartContext';
 import { ShoppingCart } from 'lucide-react';
+import { router } from '@inertiajs/react';
 
 interface Product {
     id: number;
@@ -40,7 +41,8 @@ export default function ProductCard({ product }: ProductCardProps) {
 
     const gradientClass = categoryColors[product.category.name] || 'from-orange-500 via-cyan-500 to-green-500';
 
-    const handleAddToCart = () => {
+    const handleAddToCart = (e: React.MouseEvent) => {
+        e.stopPropagation(); // Prevent navigation when clicking add to cart
         if (product.stock > 0) {
             addToCart({
                 id: product.id,
@@ -52,8 +54,15 @@ export default function ProductCard({ product }: ProductCardProps) {
         }
     };
 
+    const handleCardClick = () => {
+        router.visit(`/products/${product.slug}`);
+    };
+
     return (
-        <div className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border-2 border-transparent hover:border-gradient-to-r flex flex-col group">
+        <div 
+            onClick={handleCardClick}
+            className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border-2 border-transparent hover:border-gradient-to-r flex flex-col group cursor-pointer"
+        >
             {/* Product Image with gradient overlay on hover */}
             <div className="relative overflow-hidden">
                 <ProductImage imageUrl={product.image_url} alt={product.name} />
