@@ -60,7 +60,9 @@ class LandingController extends Controller
     {
         // If user is not authenticated, redirect to login
         if (!$request->user()) {
-            return redirect('http://app.techzero.test/login');
+            $protocol = $request->getScheme();
+            $appDomain = config('domains.app');
+            return redirect("{$protocol}://{$appDomain}/login");
         }
         
         return Inertia::render('landing/checkout');

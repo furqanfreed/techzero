@@ -156,8 +156,8 @@ return [
     |
     */
 
-    // Share session across main domain and subdomains (techzero.test + app.techzero.test)
-    'domain' => env('SESSION_DOMAIN', '.techzero.test'),
+    // Share session across main domain and subdomains
+    'domain' => config('domains.session'),
 
     /*
     |--------------------------------------------------------------------------

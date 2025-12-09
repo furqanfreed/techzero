@@ -18,7 +18,7 @@ class SetCookieDomain
         $response = $next($request);
 
         // Set cookie domain for all cookies to share across subdomains
-        $domain = config('session.domain', '.techzero.test');
+        $domain = config('domains.session');
         
         // Update all cookies in the response to use the shared domain
         foreach ($response->headers->getCookies() as $cookie) {

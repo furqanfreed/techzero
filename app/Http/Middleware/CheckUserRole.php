@@ -25,7 +25,8 @@ class CheckUserRole
         // If user is a customer, redirect to cart page on main domain
         if ($user->isCustomer()) {
             $protocol = $request->getScheme();
-            $url = "{$protocol}://techzero.test/cart";
+            $mainDomain = config('domains.main');
+            $url = "{$protocol}://{$mainDomain}/cart";
             
             // For Inertia requests, use Inertia::location() for external redirects
             if ($request->header('X-Inertia')) {
@@ -35,22 +36,8 @@ class CheckUserRole
             return redirect()->away($url);
         }
 
-        // If user is a supplier, redirect to supplier subdomain dashboard
-        if ($user->isSupplier()) {
-            $protocol = $request->getScheme();
-            $host = str_replace('app.', 'supplier.', $request->getHost());
-            $url = "{$protocol}://{$host}/dashboard";
-            
-            // For Inertia requests, use Inertia::location() for external redirects
-            if ($request->header('X-Inertia')) {
-                return Inertia::location($url);
-            }
-            
-            return redirect()->away($url);
-        }
-
-        // If user is admin, allow access to dashboard
-        if ($user->isAdmin()) {
+        // If user is admin or supplier, allow access to app domain dashboard
+        if ($user->isAdmin() || $user->isSupplier()) {
             return $next($request);
         }
 

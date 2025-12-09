@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
 
-// Landing page for main domain (techzero.test)
-Route::domain('techzero.test')->group(function () {
+// Landing page for main domain
+Route::domain(config('domains.main'))->group(function () {
     Route::get('/', [App\Http\Controllers\LandingController::class, 'index'])->name('landing.home');
     Route::get('/products/{slug}', [App\Http\Controllers\LandingController::class, 'show'])->name('landing.product.show');
     Route::get('/cart', [App\Http\Controllers\LandingController::class, 'cart'])->name('landing.cart');
@@ -28,11 +28,11 @@ Route::domain('techzero.test')->group(function () {
     Route::post('/logout', [App\Http\Controllers\LogoutController::class, '__invoke'])->name('landing.logout');
 });
 
-// Application routes for app subdomain (app.techzero.test)
-Route::domain('app.techzero.test')->group(function () {
+// Application routes for app subdomain
+Route::domain(config('domains.app'))->group(function () {
     // Redirect root to dashboard if authenticated, otherwise to login
     Route::get('/', function () {
-        if (\Illuminate\Support\Facades\Auth::check()) {
+        if (\Illuminate\Support\Facades\Auth::check()) {            
             return redirect()->route('dashboard');
         }
         return redirect()->route('login');

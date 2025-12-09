@@ -1,7 +1,8 @@
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import Navigation from '@/components/landing/navigation';
 import { CartProvider } from '@/contexts/CartContext';
 import { login } from '@/routes';
+import { type SharedData } from '@/types';
 
 interface LandingLayoutProps {
     children: React.ReactNode;
@@ -12,6 +13,7 @@ export default function LandingLayout({
     children,
     title = 'TechZero',
 }: LandingLayoutProps) {
+    const { domains } = usePage<SharedData>().props;
     return (
         <CartProvider>
             <Head title={title} />
@@ -68,7 +70,7 @@ export default function LandingLayout({
                                     </li>
                                     <li>
                                         <a
-                                            href="//supplier.techzero.test/login"
+                                            href={`//${domains.app}/login`}
                                             className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors"
                                         >
                                             Supplier Login
@@ -81,7 +83,7 @@ export default function LandingLayout({
                                     Connect
                                 </h3>
                                 <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
-                                    Email: info@techzero.test
+                                    Email: {domains.email}
                                 </p>
                                 <p className="text-gray-600 dark:text-gray-400 text-sm">
                                     Phone: +1 (555) 123-4567

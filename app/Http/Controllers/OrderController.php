@@ -20,7 +20,9 @@ class OrderController extends Controller
 
         if (!$user) {
             // Redirect to login
-            return redirect('http://app.techzero.test/login')
+            $protocol = $request->getScheme();
+            $appDomain = config('domains.app');
+            return redirect("{$protocol}://{$appDomain}/login")
                 ->with('error', 'Please login to place an order.');
         }
 

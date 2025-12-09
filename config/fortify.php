@@ -88,7 +88,7 @@ return [
 
     'prefix' => '',
 
-    'domain' => 'app.techzero.test',
+    'domain' => config('domains.app'),
 
     /*
     |--------------------------------------------------------------------------

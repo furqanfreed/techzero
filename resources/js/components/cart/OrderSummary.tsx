@@ -5,13 +5,14 @@ import { type SharedData } from '@/types';
 
 export default function OrderSummary() {
     const { items, getTotalPrice } = useCart();
-    const { auth } = usePage<SharedData>().props;
+    const { auth, domains } = usePage<SharedData>().props;
     const totalPrice = getTotalPrice();
 
     const handleCheckout = () => {
         if (!auth.user) {
             // Redirect to login
-            window.location.href = 'http://app.techzero.test/login';
+            const protocol = window.location.protocol;
+            window.location.href = `${protocol}//${domains.app}/login`;
         } else {
             router.visit('/checkout');
         }

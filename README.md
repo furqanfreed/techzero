@@ -10,7 +10,7 @@ e-commerce sleak setup with Laravel and React, featuring product marketplace wit
 - **User Authentication**: Secure authentication
 - **Dashboard**: Admin dashboard for managing the platform
 - **Responsive Design**: Modern UI
-- **Multi-domain Architecture**: Separate landing and application domains for customers, suppliers and admins
+- **Multi-domain Architecture**: Separate landing and application domains - customers on main domain, admins and suppliers on app domain
 
 ## 🛠️ Tech Stack
 
@@ -94,19 +94,67 @@ e-commerce sleak setup with Laravel and React, featuring product marketplace wit
 
 ## 🌐 Domain Configuration
 
-The application uses a multi-domain setup:
+The application uses a **two-domain architecture**:
 
-- **Landing Domain** (`techzero.test`): Public-facing e-commerce site
-- **App Domain** (`app.techzero.test`): Admin dashboard management system
-- **Supplier Domain** (`supplier.techzero.test`): Supplier dashboard and management system
+1. **Main Domain** - Public website for customers
+2. **App Domain** - Management dashboard for admins and suppliers
 
-Configure your local domains with Larvel Valet
+### Environment Variables
 
+Add these to your `.env` file:
+
+**For Local Development:**
+
+```env
+DOMAIN_MAIN=techzero.test
+DOMAIN_APP=app.techzero.test
+DOMAIN_SESSION=.techzero.test
+DOMAIN_EMAIL=info@techzero.test
 ```
- techzero.test
- app.techzero.test
- supplier.techzero.test
+
+**For Production:**
+
+```env
+DOMAIN_MAIN=techzero.com
+DOMAIN_APP=app.techzero.com
+DOMAIN_SESSION=.techzero.com
+DOMAIN_EMAIL=info@techzero.com
 ```
+
+> **Note:** The app domain uses the `app.` prefix. For production, you can use any domain with the `app.` prefix (e.g., `app.yourdomain.com`).
+
+### Domain Architecture
+
+- **Main Domain** (`DOMAIN_MAIN`):
+    - Public-facing e-commerce website
+    - Used by customers for browsing products, shopping cart, and placing orders
+    - Example: `techzero.test` (local) or `techzero.com` (production)
+
+- **App Domain** (`DOMAIN_APP`):
+    - Admin and supplier dashboard
+    - Management system for platform administration
+    - Example: `app.techzero.test` (local) or `app.techzero.com` (production)
+
+### Role-Based Access
+
+The app domain (`DOMAIN_APP`) serves both admins and suppliers with role-based data filtering:
+
+- **Admins**: See all data across the platform (all products, orders, users, and total revenue)
+- **Suppliers**: See only their own data (their products, orders containing their products, customers who ordered from them, and revenue from their products)
+- **Customers**: Automatically redirected to the main domain when accessing the app domain
+
+### Local Setup
+
+Configure your local domains with Laravel Valet:
+
+```bash
+valet link techzero
+```
+
+Then access:
+
+- `techzero.test` - Website (for customers)
+- `app.techzero.test` - Dashboard (for admins and suppliers)
 
 ## 👤 Author
 

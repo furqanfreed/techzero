@@ -1,9 +1,10 @@
 import { Head, useForm, usePage } from '@inertiajs/react';
 import { FormEvent, useEffect } from 'react';
 import LandingLayout from '@/layouts/landing-layout';
+import { type SharedData } from '@/types';
 
 export default function Contact() {
-    const { flash } = usePage().props as { flash?: { success?: string } };
+    const { flash, domains } = usePage<SharedData>().props;
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
@@ -46,7 +47,7 @@ export default function Contact() {
                                         Email
                                     </p>
                                     <p className="text-gray-900 dark:text-white">
-                                        info@techzero.test
+                                        {domains.email}
                                     </p>
                                 </div>
                                 <div>
