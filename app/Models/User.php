@@ -24,6 +24,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'ulid',
     ];
 
     /**
@@ -37,6 +38,20 @@ class User extends Authenticatable
         'two_factor_recovery_codes',
         'remember_token',
     ];
+
+    /**
+     * Boot the model.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            if (empty($user->ulid)) {
+                $user->ulid = \Illuminate\Support\Str::ulid();
+            }
+        });
+    }
 
     /**
      * Get the attributes that should be cast.

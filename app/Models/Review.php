@@ -20,7 +20,22 @@ class Review extends Model
         'reviewer_email',
         'status',
         'reviewed_at',
+        'ulid',
     ];
+
+    /**
+     * Boot the model.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($review) {
+            if (empty($review->ulid)) {
+                $review->ulid = \Illuminate\Support\Str::ulid();
+            }
+        });
+    }
 
     /**
      * Get the attributes that should be cast.

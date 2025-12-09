@@ -24,7 +24,22 @@ class OrderItem extends Model
         'price',
         'total',
         'status',
+        'ulid',
     ];
+
+    /**
+     * Boot the model.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($orderItem) {
+            if (empty($orderItem->ulid)) {
+                $orderItem->ulid = \Illuminate\Support\Str::ulid();
+            }
+        });
+    }
 
     /**
      * Get the attributes that should be cast.

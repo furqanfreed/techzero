@@ -27,7 +27,22 @@ class Product extends Model
         'image_url',
         'status',
         'meta',
+        'ulid',
     ];
+
+    /**
+     * Boot the model.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($product) {
+            if (empty($product->ulid)) {
+                $product->ulid = \Illuminate\Support\Str::ulid();
+            }
+        });
+    }
 
     /**
      * Get the attributes that should be cast.

@@ -44,6 +44,9 @@ Route::domain(config('domains.app'))->group(function () {
         
         // Product routes - CRUD operations
         Route::resource('products', App\Http\Controllers\ProductController::class);
+        
+        // Customer routes
+        Route::get('customers', [App\Http\Controllers\CustomerController::class, 'index'])->name('customers.index');
     });
 
     // API routes for dashboard - requires auth
