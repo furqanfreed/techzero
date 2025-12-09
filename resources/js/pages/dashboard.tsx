@@ -1,8 +1,9 @@
+import { useEffect, useState } from 'react';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
-import { Package, ShoppingCart, Users, TrendingUp } from 'lucide-react';
+import { Package, ShoppingCart, Users, TrendingUp, Loader2 } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -11,7 +12,60 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
+interface DashboardStats {
+    total_products: number;
+    total_orders: number;
+    total_users: number;
+    revenue: number;
+}
+
 export default function Dashboard() {
+    const [stats, setStats] = useState<DashboardStats | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchStats = async () => {
+            try {
+                setLoading(true);
+                setError(null);
+                const response = await fetch('/api/dashboard/stats', {
+                    headers: {
+                        Accept: 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch dashboard statistics');
+                }
+
+                const result = await response.json();
+                if (result.success) {
+                    setStats(result.data);
+                } else {
+                    throw new Error(result.message || 'Failed to fetch statistics');
+                }
+            } catch (err) {
+                setError(err instanceof Error ? err.message : 'An error occurred');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchStats();
+    }, []);
+
+    const formatCurrency = (amount: number): string => {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        }).format(amount);
+    };
+
+    const formatNumber = (num: number): string => {
+        return new Intl.NumberFormat('en-US').format(num);
+    };
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
@@ -34,7 +88,13 @@ export default function Dashboard() {
                                     Total Products
                                 </p>
                                 <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">
-                                    --
+                                    {loading ? (
+                                        <Loader2 className="h-6 w-6 animate-spin text-gray-400" />
+                                    ) : error ? (
+                                        <span className="text-red-500 text-sm">Error</span>
+                                    ) : (
+                                        formatNumber(stats?.total_products ?? 0)
+                                    )}
                                 </p>
                             </div>
                             <div className="rounded-full bg-blue-100 p-3 dark:bg-blue-900/20">
@@ -50,7 +110,13 @@ export default function Dashboard() {
                                     Total Orders
                                 </p>
                                 <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">
-                                    --
+                                    {loading ? (
+                                        <Loader2 className="h-6 w-6 animate-spin text-gray-400" />
+                                    ) : error ? (
+                                        <span className="text-red-500 text-sm">Error</span>
+                                    ) : (
+                                        formatNumber(stats?.total_orders ?? 0)
+                                    )}
                                 </p>
                             </div>
                             <div className="rounded-full bg-green-100 p-3 dark:bg-green-900/20">
@@ -66,7 +132,13 @@ export default function Dashboard() {
                                     Total Users
                                 </p>
                                 <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">
-                                    --
+                                    {loading ? (
+                                        <Loader2 className="h-6 w-6 animate-spin text-gray-400" />
+                                    ) : error ? (
+                                        <span className="text-red-500 text-sm">Error</span>
+                                    ) : (
+                                        formatNumber(stats?.total_users ?? 0)
+                                    )}
                                 </p>
                             </div>
                             <div className="rounded-full bg-purple-100 p-3 dark:bg-purple-900/20">
@@ -82,7 +154,13 @@ export default function Dashboard() {
                                     Revenue
                                 </p>
                                 <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">
-                                    --
+                                    {loading ? (
+                                        <Loader2 className="h-6 w-6 animate-spin text-gray-400" />
+                                    ) : error ? (
+                                        <span className="text-red-500 text-sm">Error</span>
+                                    ) : (
+                                        formatCurrency(stats?.revenue ?? 0)
+                                    )}
                                 </p>
                             </div>
                             <div className="rounded-full bg-orange-100 p-3 dark:bg-orange-900/20">

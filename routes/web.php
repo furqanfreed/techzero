@@ -38,11 +38,14 @@ Route::domain('app.techzero.test')->group(function () {
         return redirect()->route('login');
     })->name('home');
 
-    // Dashboard route - requires auth and role check
+    // Dashboard routes - requires auth and role check
     Route::middleware(['auth', 'verified', 'check.user.role'])->group(function () {
-        Route::get('dashboard', function () {
-            return Inertia::render('dashboard');
-        })->name('dashboard');
+        Route::get('dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    });
+
+    // API routes for dashboard - requires auth
+    Route::middleware('auth')->prefix('api')->group(function () {
+        Route::get('dashboard/stats', [App\Http\Controllers\Api\DashboardController::class, 'stats'])->name('api.dashboard.stats');
     });
 
     require __DIR__.'/settings.php';
