@@ -58,12 +58,18 @@ class OrderController extends Controller
             foreach ($validated['items'] as $item) {
                 $itemTotal = (float) $item['price'] * (int) $item['quantity'];
                 
+                // Get product to retrieve supplier_id
+                $product = \App\Models\Product::findOrFail($item['id']);
+                
                 OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $item['id'],
+                    'supplier_id' => $product->supplier_id,
+                    'user_id' => $user->id,
                     'quantity' => $item['quantity'],
                     'price' => $item['price'],
                     'total' => $itemTotal,
+                    'status' => 'pending',
                 ]);
             }
 

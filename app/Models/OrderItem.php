@@ -18,9 +18,12 @@ class OrderItem extends Model
     protected $fillable = [
         'order_id',
         'product_id',
+        'supplier_id',
+        'user_id',
         'quantity',
         'price',
         'total',
+        'status',
     ];
 
     /**
@@ -50,5 +53,21 @@ class OrderItem extends Model
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
+    }
+
+    /**
+     * Get the supplier that owns the order item.
+     */
+    public function supplier(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'supplier_id');
+    }
+
+    /**
+     * Get the user (customer) that owns the order item.
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
