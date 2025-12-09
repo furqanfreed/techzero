@@ -54,6 +54,19 @@ class LandingController extends Controller
     }
 
     /**
+     * Display the checkout page.
+     */
+    public function checkout(Request $request)
+    {
+        // If user is not authenticated, redirect to login
+        if (!$request->user()) {
+            return redirect('http://app.techzero.test/login');
+        }
+        
+        return Inertia::render('landing/checkout');
+    }
+
+    /**
      * Display a single product details page.
      */
     public function show(string $slug)

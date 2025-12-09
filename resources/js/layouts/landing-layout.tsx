@@ -1,6 +1,7 @@
 import { Head } from '@inertiajs/react';
 import Navigation from '@/components/landing/navigation';
 import { CartProvider } from '@/contexts/CartContext';
+import { login } from '@/routes';
 
 interface LandingLayoutProps {
     children: React.ReactNode;
@@ -55,6 +56,22 @@ export default function LandingLayout({
                                             className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors"
                                         >
                                             Contact
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            href={login().url}
+                                            className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors"
+                                        >
+                                            Customer Login
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="//supplier.techzero.test/login"
+                                            className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors"
+                                        >
+                                            Supplier Login
                                         </a>
                                     </li>
                                 </ul>

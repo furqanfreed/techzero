@@ -18,10 +18,25 @@ class Order extends Model
      */
     protected $fillable = [
         'user_id',
+        'ulid',
         'order_number',
         'status',
         'total_amount',
     ];
+
+    /**
+     * Boot the model.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($order) {
+            if (empty($order->ulid)) {
+                $order->ulid = \Illuminate\Support\Str::ulid();
+            }
+        });
+    }
 
     /**
      * Get the attributes that should be cast.

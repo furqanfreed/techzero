@@ -12,17 +12,34 @@ Route::domain('techzero.test')->group(function () {
     Route::get('/about', [App\Http\Controllers\LandingController::class, 'about'])->name('landing.about');
     Route::get('/contact', [App\Http\Controllers\LandingController::class, 'contact'])->name('landing.contact');
     Route::post('/contact', [App\Http\Controllers\LandingController::class, 'storeContact'])->name('landing.contact.store');
+    
+    // Checkout (no auth middleware - we handle auth in controller)
+    Route::get('/checkout', [App\Http\Controllers\LandingController::class, 'checkout'])->name('landing.checkout');
+    
+    // Orders (require auth)
+    Route::middleware('auth')->group(function () {
+        Route::post('/orders', [App\Http\Controllers\OrderController::class, 'store'])->name('landing.orders.store');
+        Route::get('/orders', [App\Http\Controllers\OrderController::class, 'index'])->name('landing.orders.index');
+        Route::get('/orders/{ulid}', [App\Http\Controllers\OrderController::class, 'show'])->name('landing.orders.show');
+        Route::get('/orders/{ulid}/success', [App\Http\Controllers\OrderController::class, 'success'])->name('landing.orders.success');
+    });
+    
+    // Logout
+    Route::post('/logout', [App\Http\Controllers\LogoutController::class, '__invoke'])->name('landing.logout');
 });
 
 // Application routes for app subdomain (app.techzero.test)
 Route::domain('app.techzero.test')->group(function () {
+    // Redirect root to dashboard if authenticated, otherwise to login
     Route::get('/', function () {
-        return Inertia::render('welcome', [
-            'canRegister' => Features::enabled(Features::registration()),
-        ]);
+        if (\Illuminate\Support\Facades\Auth::check()) {
+            return redirect()->route('dashboard');
+        }
+        return redirect()->route('login');
     })->name('home');
 
-    Route::middleware(['auth', 'verified'])->group(function () {
+    // Dashboard route - requires auth and role check
+    Route::middleware(['auth', 'verified', 'check.user.role'])->group(function () {
         Route::get('dashboard', function () {
             return Inertia::render('dashboard');
         })->name('dashboard');

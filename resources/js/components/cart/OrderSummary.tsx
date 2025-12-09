@@ -1,9 +1,21 @@
-import { Link } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
 import { useCart } from '@/contexts/CartContext';
+import { usePage } from '@inertiajs/react';
+import { type SharedData } from '@/types';
 
 export default function OrderSummary() {
     const { items, getTotalPrice } = useCart();
+    const { auth } = usePage<SharedData>().props;
     const totalPrice = getTotalPrice();
+
+    const handleCheckout = () => {
+        if (!auth.user) {
+            // Redirect to login
+            window.location.href = 'http://app.techzero.test/login';
+        } else {
+            router.visit('/checkout');
+        }
+    };
 
     return (
         <div className="lg:col-span-1">
@@ -42,6 +54,7 @@ export default function OrderSummary() {
                     </div>
 
                     <button
+                        onClick={handleCheckout}
                         className="w-full px-6 py-4 rounded-xl font-extrabold text-white bg-gradient-to-r from-orange-500 via-cyan-500 to-green-500 hover:from-orange-600 hover:via-cyan-600 hover:to-green-600 transition-all shadow-xl hover:shadow-2xl transform hover:scale-105 duration-300 mb-4 relative overflow-hidden group"
                     >
                         <span className="relative z-10 flex items-center justify-center gap-2">
