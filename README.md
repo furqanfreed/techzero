@@ -2,7 +2,7 @@
 
 e-commerce sleak setup with Laravel and React, featuring product marketplace with shopping cart, order management, and user authentication.
 
-## 🚀 Features
+## Features
 
 - **Product Catalog**: Browse and search technology products with categories
 - **Shopping Cart**: Add products to cart and manage quantities
@@ -12,14 +12,14 @@ e-commerce sleak setup with Laravel and React, featuring product marketplace wit
 - **Responsive Design**: Modern UI
 - **Multi-domain Architecture**: Separate landing and application domains - customers on main domain, admins and suppliers on app domain
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Laravel 12**: PHP framework
 - **React 19**: UI library
 - **Tailwind CSS 4**: Utility-first CSS framework
 - **Vite**: Build tool and dev server
 
-## 📋 Prerequisites
+## Prerequisites
 
 - PHP 8.2 or higher
 - Composer
@@ -27,7 +27,7 @@ e-commerce sleak setup with Laravel and React, featuring product marketplace wit
 - MySQL/PostgreSQL database
 - Git
 
-## 🔧 Installation
+## Installation
 
 1. **Clone the repository**
 
@@ -71,6 +71,7 @@ e-commerce sleak setup with Laravel and React, featuring product marketplace wit
 
     ```bash
     php artisan migrate
+    php artisan db:seed
     ```
 
 7. **Build assets**
@@ -92,7 +93,7 @@ e-commerce sleak setup with Laravel and React, featuring product marketplace wit
     npm run dev
     ```
 
-## 🌐 Domain Configuration
+## Domain Configuration
 
 The application uses a **two-domain architecture**:
 
@@ -159,7 +160,7 @@ Then access:
 - `techzero.test` - Website (for customers)
 - `app.techzero.test` - Dashboard (for admins and suppliers)
 
-## 🚪 How to Access the App
+## How to Access the App
 
 After completing the installation and running the database seeders, here's how to access different parts of the application:
 
@@ -227,7 +228,7 @@ The database seeders create **20 existing customers** who have already made purc
 
 > **Note:** All seeded customers use the password `techzero#` for testing. You can find customer emails in the `CustomerSeeder.php` file or check the database after seeding.
 
-## 🔐 Test Credentials Summary
+## Test Credentials Summary
 
 Quick reference for all test accounts created by the seeders:
 
