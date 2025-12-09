@@ -41,6 +41,9 @@ Route::domain(config('domains.app'))->group(function () {
     // Dashboard routes - requires auth and role check
     Route::middleware(['auth', 'verified', 'check.user.role'])->group(function () {
         Route::get('dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+        
+        // Product routes - CRUD operations
+        Route::resource('products', App\Http\Controllers\ProductController::class);
     });
 
     // API routes for dashboard - requires auth

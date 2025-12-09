@@ -42,6 +42,7 @@ export interface User {
     avatar?: string;
     email_verified_at: string | null;
     two_factor_enabled?: boolean;
+    role?: 'admin' | 'supplier' | 'customer';
     created_at: string;
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
@@ -58,4 +59,6 @@ export interface PaginatedData<T> {
     last_page: number;
     per_page: number;
     total: number;
+    from?: number;
+    to?: number;
 }
