@@ -11,7 +11,7 @@ return [
     | application. These values can be overridden in your .env file.
     |
     | For local development: techzero.test
-    | For production: techzero.com
+    | For production: techzero.store
     |
     */
 

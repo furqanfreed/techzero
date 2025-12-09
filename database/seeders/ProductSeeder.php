@@ -54,15 +54,22 @@ class ProductSeeder extends Seeder
             $categorySlug = $this->command->argument('category');
         }
 
-        // Get or create supplier users
-        $suppliers = User::where('role', 'supplier')->get();
+        // Get the 2 specific suppliers
+        $suppliers = User::whereIn('email', ['supplier1@techzero.store', 'supplier2@techzero.store'])
+            ->where('role', 'supplier')
+            ->get();
         
         if ($suppliers->isEmpty()) {
-            $suppliers = User::factory()
-                ->count(3)
-                ->supplier()
-                ->create();
+            $this->command->error('Suppliers not found. Please run SupplierSeeder first.');
+            return;
         }
+        
+        if ($suppliers->count() < 2) {
+            $this->command->warn('Only ' . $suppliers->count() . ' supplier(s) found. Expected 2.');
+        }
+
+        // Reassign all existing products to these 2 suppliers randomly
+        $this->reassignExistingProducts($suppliers);
 
         // If a specific category is provided, seed only that category
         if ($categorySlug !== null) {
@@ -265,5 +272,23 @@ class ProductSeeder extends Seeder
         }
 
         return $product;
+    }
+
+    /**
+     * Reassign all existing products to the specified suppliers randomly
+     */
+    private function reassignExistingProducts($suppliers): void
+    {
+        $products = Product::all();
+        
+        foreach ($products as $product) {
+            $product->update([
+                'supplier_id' => $suppliers->random()->id,
+            ]);
+        }
+        
+        if ($products->count() > 0) {
+            $this->command->info("Reassigned {$products->count()} existing products to the 2 suppliers.");
+        }
     }
 }

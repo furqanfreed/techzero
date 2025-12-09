@@ -13,15 +13,11 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        // Extract domain from main domain config
-        $mainDomain = config('domains.main');
-        $adminEmail = 'admin@' . $mainDomain;
-        
         User::firstOrCreate(
-            ['email' => $adminEmail],
+            ['email' => 'admin@techzero.store'],
             [
                 'name' => 'Super Admin',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('techzero#'),
                 'role' => 'admin',
                 'email_verified_at' => now(),
             ]
