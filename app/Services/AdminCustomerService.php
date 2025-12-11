@@ -5,27 +5,31 @@ namespace App\Services;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
 
 class AdminCustomerService
 {
     /**
      * Get paginated customers with their orders for admin.
      *
-     * @param array<string, mixed> $filters
-     * @return LengthAwarePaginator
+     * @param  array<string, mixed>  $filters
      */
     public function getCustomers(array $filters = []): LengthAwarePaginator
     {
         $query = User::where('role', 'customer')
             ->whereHas('orders') // Only customers who have placed orders
+            ->withCount([
+                'orders as total_orders',
+            ])
+            ->withSum('orders as total_spent', 'total_amount')
             ->with(['orders' => function ($query) {
+                // Only load latest 5 orders for display (frontend shows 3)
                 $query->select('id', 'user_id', 'order_number', 'status', 'total_amount', 'created_at')
-                    ->orderBy('created_at', 'desc');
+                    ->orderBy('created_at', 'desc')
+                    ->limit(5);
             }]);
 
         // Apply search filter
-        if (!empty($filters['search'])) {
+        if (! empty($filters['search'])) {
             $search = $filters['search'];
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
@@ -34,7 +38,7 @@ class AdminCustomerService
         }
 
         // Apply order status filter
-        if (!empty($filters['order_status'])) {
+        if (! empty($filters['order_status'])) {
             $query->whereHas('orders', function ($q) use ($filters) {
                 $q->where('status', $filters['order_status']);
             });
@@ -57,8 +61,8 @@ class AdminCustomerService
                         'created_at' => $order->created_at->format('Y-m-d H:i:s'),
                     ];
                 }),
-                'total_orders' => $customer->orders->count(),
-                'total_spent' => $customer->orders->sum('total_amount'),
+                'total_orders' => $customer->total_orders ?? 0,
+                'total_spent' => $customer->total_spent ?? '0.00',
                 'created_at' => $customer->created_at->format('Y-m-d H:i:s'),
             ];
         });
