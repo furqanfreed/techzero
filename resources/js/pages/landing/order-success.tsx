@@ -2,7 +2,7 @@ import LandingLayout from '@/layouts/landing-layout';
 import { Link, Head } from '@inertiajs/react';
 import { CheckCircle, Package, ArrowRight, Home } from 'lucide-react';
 import { useEffect } from 'react';
-import { useCart } from '@/contexts/CartContext';
+import { useCartStore } from '@/stores/cart-store';
 
 interface OrderItem {
     id: number;
@@ -32,17 +32,17 @@ interface OrderSuccessProps {
     order: Order;
 }
 
-// Inner component that has access to CartProvider context
+// Inner component that has access to cart store
 function OrderSuccessContent({ order }: OrderSuccessProps) {
-    const { clearCart } = useCart();
+    const clearCart = useCartStore((state) => state.clearCart);
     
-    // Clear cart from localStorage and update context API when order success page loads
+    // Clear cart from localStorage and update store when order success page loads
     useEffect(() => {
         try {
             // Clear cart from localStorage
             localStorage.removeItem('techzero_cart');
             
-            // Update context API to clear cart state
+            // Update store to clear cart state
             clearCart();
         } catch (error) {
             console.error('Error clearing cart from localStorage:', error);

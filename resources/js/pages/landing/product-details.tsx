@@ -2,7 +2,7 @@ import { Head, router } from '@inertiajs/react';
 import LandingLayout from '@/layouts/landing-layout';
 import ProductImage from '@/components/product/ProductImage';
 import StarRating from '@/components/product/StarRating';
-import { useCart } from '@/contexts/CartContext';
+import { useCartStore } from '@/stores/cart-store';
 import { ShoppingCart, ArrowLeft, Package, Truck, Shield, RotateCcw, Tag, Scale, Ruler, Star, Calendar } from 'lucide-react';
 import { useState } from 'react';
 
@@ -137,7 +137,7 @@ function ProductDetailsContent({
     gradientClass: string;
     formatDate: (dateString: string | null) => string;
 }) {
-    const { addToCart } = useCart();
+    const addToCart = useCartStore((state) => state.addToCart);
 
     const handleAddToCart = () => {
         if (product.stock > 0) {

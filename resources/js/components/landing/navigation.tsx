@@ -1,6 +1,6 @@
 import { Link, router } from '@inertiajs/react';
 import { ShoppingCart, User, LogOut, Package } from 'lucide-react';
-import { useCart } from '@/contexts/CartContext';
+import { useCartStore } from '@/stores/cart-store';
 import { usePage } from '@inertiajs/react';
 import { type SharedData } from '@/types';
 import { login } from '@/routes';
@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 export default function Navigation() {
-    const { getTotalItems } = useCart();
+    const getTotalItems = useCartStore((state) => state.getTotalItems);
     const { auth } = usePage<SharedData>().props;
     const cartCount = getTotalItems();
 

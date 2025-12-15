@@ -1,5 +1,5 @@
 import LandingLayout from '@/layouts/landing-layout';
-import { useCart } from '@/contexts/CartContext';
+import { useCartStore } from '@/stores/cart-store';
 import { useForm, Head } from '@inertiajs/react';
 import { usePage } from '@inertiajs/react';
 import { type SharedData } from '@/types';
@@ -17,7 +17,9 @@ interface CheckoutFormData {
 }
 
 function CheckoutContent() {
-    const { items, getTotalPrice, clearCart } = useCart();
+    const items = useCartStore((state) => state.items);
+    const getTotalPrice = useCartStore((state) => state.getTotalPrice);
+    const clearCart = useCartStore((state) => state.clearCart);
     const { auth } = usePage<SharedData>().props;
     const totalPrice = getTotalPrice();
 

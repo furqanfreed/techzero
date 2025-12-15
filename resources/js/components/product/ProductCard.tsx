@@ -1,6 +1,6 @@
 import ProductImage from './ProductImage';
 import StarRating from './StarRating';
-import { useCart } from '@/contexts/CartContext';
+import { useCartStore } from '@/stores/cart-store';
 import { ShoppingCart } from 'lucide-react';
 import { router } from '@inertiajs/react';
 
@@ -29,7 +29,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-    const { addToCart } = useCart();
+    const addToCart = useCartStore((state) => state.addToCart);
 
     // Color gradients based on category using logo colors (Orange, Cyan, Green, Yellow)
     const categoryColors: Record<string, string> = {

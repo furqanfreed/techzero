@@ -1,9 +1,11 @@
-import { useCart } from '@/contexts/CartContext';
+import { useCartStore } from '@/stores/cart-store';
 import ProductImage from '@/components/product/ProductImage';
 import { Trash2, Plus, Minus } from 'lucide-react';
 
 export default function CartItemsList() {
-    const { items, removeFromCart, updateQuantity } = useCart();
+    const items = useCartStore((state) => state.items);
+    const removeFromCart = useCartStore((state) => state.removeFromCart);
+    const updateQuantity = useCartStore((state) => state.updateQuantity);
 
     const handleQuantityChange = (productId: number, newQuantity: number) => {
         if (newQuantity < 1) {

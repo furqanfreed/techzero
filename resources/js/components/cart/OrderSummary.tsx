@@ -1,10 +1,11 @@
 import { Link, router } from '@inertiajs/react';
-import { useCart } from '@/contexts/CartContext';
+import { useCartStore } from '@/stores/cart-store';
 import { usePage } from '@inertiajs/react';
 import { type SharedData } from '@/types';
 
 export default function OrderSummary() {
-    const { items, getTotalPrice } = useCart();
+    const items = useCartStore((state) => state.items);
+    const getTotalPrice = useCartStore((state) => state.getTotalPrice);
     const { auth, domains } = usePage<SharedData>().props;
     const totalPrice = getTotalPrice();
 

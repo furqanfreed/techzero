@@ -1,11 +1,11 @@
 import LandingLayout from '@/layouts/landing-layout';
-import { useCart } from '@/contexts/CartContext';
+import { useCartStore } from '@/stores/cart-store';
 import EmptyCart from '@/components/cart/EmptyCart';
 import CartItemsList from '@/components/cart/CartItemsList';
 import OrderSummary from '@/components/cart/OrderSummary';
 
 function CartContent() {
-    const { items } = useCart();
+    const items = useCartStore((state) => state.items);
 
     if (items.length === 0) {
         return <EmptyCart />;

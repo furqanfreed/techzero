@@ -1,6 +1,5 @@
 import { Head, usePage } from '@inertiajs/react';
 import Navigation from '@/components/landing/navigation';
-import { CartProvider } from '@/contexts/CartContext';
 import { login } from '@/routes';
 import { type SharedData } from '@/types';
 
@@ -15,7 +14,7 @@ export default function LandingLayout({
 }: LandingLayoutProps) {
     const { domains } = usePage<SharedData>().props;
     return (
-        <CartProvider>
+        <>
             <Head title={title} />
             <div className="min-h-screen bg-white dark:bg-gray-950">
                 <Navigation />
@@ -99,6 +98,6 @@ export default function LandingLayout({
                     </div>
                 </footer>
             </div>
-        </CartProvider>
+        </>
     );
 }
