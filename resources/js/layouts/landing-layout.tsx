@@ -1,6 +1,7 @@
 import { Head, usePage } from '@inertiajs/react';
 import Navigation from '@/components/landing/navigation';
 import { CartProvider } from '@/contexts/CartContext';
+import { Toaster } from 'sonner';
 import { login } from '@/routes';
 import { type SharedData } from '@/types';
 
@@ -20,6 +21,7 @@ export default function LandingLayout({
             <div className="min-h-screen bg-white dark:bg-gray-950">
                 <Navigation />
                 <main>{children}</main>
+                <Toaster />
                 <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 mt-16">
                     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
