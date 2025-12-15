@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, useMemo, useCallback, ReactNode } from 'react';
+import { toast } from 'sonner';
 
 export interface CartItem {
     id: number;
@@ -87,6 +88,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
                 // If item doesn't exist, add it with quantity 1
                 newItems = [...prevItems, { ...product, quantity: 1 }];
             }
+
+            // Show toast notification
+            const finalQuantity = existingItem ? existingItem.quantity + 1 : 1;
+            toast.success('Product added to cart', {
+                description: `${product.name}${finalQuantity > 1 ? ` (${finalQuantity}x)` : ''} has been added to your cart.`,
+            });
 
             return newItems;
         });
